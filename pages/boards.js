@@ -17,7 +17,7 @@ class Boards extends Component {
     // server: "http://home420.trueddns.com:57527/v1",
     versionList: [],
     data: [],
-    b_id: "",
+    device_id: "",
     b_name: "",
     version: "",
     toggle: false,
@@ -27,8 +27,8 @@ class Boards extends Component {
     await this.props.fetchBoards();
   }
 
-  getVersionData() {
-    axios.get(`${this.state.server}/getFileData`).then((res) => {
+  async getVersionData() {
+    await axios.get(`${this.state.server}/getFileData`).then((res) => {
       res.data.map((i) => {
         this.state.versionList.push(i.version);
       });
@@ -41,7 +41,7 @@ class Boards extends Component {
   componentDidMount() {
     setInterval(() => {
       this.getData();
-    }, 5000);
+    }, 10000);
 
     this.getVersionData();
     console.log(this.state.versionList.length);
@@ -52,12 +52,13 @@ class Boards extends Component {
     console.log(this.props.data);
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     if (this.state.edit) {
-      axios
-        .patch(`${this.state.server}/updateVersion/${this.state.b_id}`, {
+      await axios
+        .patch(`${this.state.server}/updateDeviceVersion`, {
           version: this.state.version,
+          device_id: this.state.device_id,
         })
         .then((res) => {
           if (res.data.message) {
@@ -67,11 +68,12 @@ class Boards extends Component {
           this.handleToggle();
         });
     } else {
-      axios
+      await axios
         .post(`${this.state.server}/addBoard`, {
-          b_id: this.state.id,
-          b_name: this.state.name,
+          device_id: this.state.id,
+          name: this.state.name,
           version: this.state.version,
+          userId: String(Cookies.get("_id_")),
         })
         .then((res) => {
           if (res.data.message) {
@@ -85,7 +87,7 @@ class Boards extends Component {
     console.log(this.state);
   };
 
-  handleToggle = (id, name, version, edit, b_id) => {
+  handleToggle = (id, name, version, edit, device_id) => {
     if (this.state.edit == true) {
       this.setState({ edit: false });
     }
@@ -95,7 +97,7 @@ class Boards extends Component {
       name: name,
       version: version,
       edit: edit,
-      b_id: b_id,
+      device_id: device_id,
     });
 
     console.log(this.state);
@@ -242,11 +244,11 @@ class Boards extends Component {
                               className="btn btn-outline-warning"
                               onClick={() => {
                                 this.handleToggle(
-                                  board.b_id,
+                                  board.device_id,
                                   board.name,
                                   board.version,
                                   true,
-                                  board.id
+                                  board.device_id
                                 );
                               }}
                             >

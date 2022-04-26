@@ -13,7 +13,7 @@ class OTA extends Component {
   state = {
     // server: "https://ota-drive.herokuapp.com",
     // server: "http://localhost:4008",
-    server: "https://www.matchchemical.tk:57527/v1",
+    server: "https://www.matchchemical.tk:57527",
     // server: "http://home420.trueddns.com:57527",
     // server: "http://matchchemical.ddns.net:4008",
     name: "TEST State",
