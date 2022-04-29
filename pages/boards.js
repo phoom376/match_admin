@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 class Boards extends Component {
   state = {
     // server: "http://localhost:4008/v1",
-    server: "https://www.matchchemical.tk:57527/v1",
+    server: "https://www.matchchemical.tk:4008/v1",
     // server: "http://matchchemical.ddns.net:4008/v1",
     // server: "http://home420.trueddns.com:57527/v1",
     versionList: [],
