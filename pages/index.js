@@ -15,6 +15,7 @@ export default function Home() {
     <Default>
       <div>
         <button
+          className="btn btn-outline-info"
           onClick={() => {
             getBoards();
           }}
