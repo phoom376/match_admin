@@ -4,11 +4,11 @@ import Axios from "axios";
 
 export default function Home() {
   const getBoards = async () => {
-    await Axios.get("http://www.matchchemical.tk:4007/v1/getBoards").then(
-      (res) => {
-        console.log(res.data);
-      }
-    );
+    await Axios.get(
+      "https://cors-anywhere.herokuapp.com/http://www.matchchemical.tk:4007/v1/getBoards"
+    ).then((res) => {
+      console.log(res.data);
+    });
   };
 
   return (
