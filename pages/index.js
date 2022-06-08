@@ -3,10 +3,11 @@ import Default from "../components/layouts/Default";
 import Axios from "axios";
 
 export default function Home() {
+  const url = "http://www.matchchemical.tk:4007/v1/getBoards";
   const getBoards = async () => {
-    await Axios.get(
-      "https://cors-anywhere.herokuapp.com/http://www.matchchemical.tk:4007/v1/getBoards"
-    ).then((res) => {
+    await Axios.get(url, {
+      headers: { "Access-Control-Allow-Origin": "*" },
+    }).then((res) => {
       console.log(res.data);
     });
   };
