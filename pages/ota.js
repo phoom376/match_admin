@@ -13,7 +13,7 @@ class OTA extends Component {
   state = {
     // server: "https://ota-drive.herokuapp.com",
     // server: "http://localhost:4008",
-    server: "https://www.matchchemical.tk:4009",
+    server: "https://api.matchchemicals.com/admin",
     // server: "http://home420.trueddns.com:57527",
     // server: "http://matchchemical.ddns.net:4008",
     name: "TEST State",
@@ -95,7 +95,7 @@ class OTA extends Component {
     if (check && this.state.version != "" && this.state.file != null) {
       console.log("OK");
       await axios
-        .post(`${this.state.server}/v1/uploadFile`, formData, {
+        .post(`${this.state.server}/uploadFile`, formData, {
           onUploadProgress: (ProgressEvent) => {
             this.setState({
               progress: parseInt(
@@ -147,16 +147,14 @@ class OTA extends Component {
 
   handleDelete = async (id) => {
     console.log(id);
-    await axios
-      .delete(`${this.state.server}/v1/deleteFile/${id}`)
-      .then((res) => {
-        if (res.data.message) {
-          this.setState({ size: 0 });
-          this.getData();
+    await axios.delete(`${this.state.server}/deleteFile/${id}`).then((res) => {
+      if (res.data.message) {
+        this.setState({ size: 0 });
+        this.getData();
 
-          alert("FILE DELETED");
-        }
-      });
+        alert("FILE DELETED");
+      }
+    });
   };
 
   render() {
